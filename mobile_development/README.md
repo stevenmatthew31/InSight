@@ -1,0 +1,1 @@
+Authentication still not working, but camera ready and for the logo apps use the logo from "dicoding" temporarily
