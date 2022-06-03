@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_dicoding"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.100000024" />
+
+    <TextView
+        android:id="@+id/title_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/title_register"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.17"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.04000002" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edt_name"
+        android:layout_width="351dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:hint="@string/hint_name"
+        android:maxLines="1"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_register"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edt_username"
+        android:layout_width="351dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:alpha="0"
+        android:hint="@string/hint_username"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/edt_name"
+        app:layout_constraintStart_toStartOf="@+id/edt_name"
+        app:layout_constraintTop_toBottomOf="@+id/edt_name"
+        app:layout_constraintVertical_bias="0.00999999" />
+
+    <com.mitsuru.insight.customview.EmailEditText
+        android:id="@+id/edt_email"
+        android:layout_width="351dp"
+        android:layout_height="48dp"
+        android:alpha="0"
+        android:hint="@string/hint_email"
+        android:maxLines="1"
+
+        app:layout_constraintEnd_toEndOf="@+id/edt_username"
+        app:layout_constraintTop_toBottomOf="@+id/edt_username" />
+
+    <com.mitsuru.insight.customview.RegisterEditText
+        android:id="@+id/edt_password"
+        android:layout_width="351dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:alpha="0"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/edt_email"
+        app:layout_constraintStart_toStartOf="@+id/edt_email"
+        app:layout_constraintTop_toBottomOf="@+id/edt_email"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.mitsuru.insight.customview.RegisterButton
+        android:id="@+id/btn_registerNow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:enabled="false"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/edt_password"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/edt_password"
+        app:layout_constraintTop_toBottomOf="@+id/edt_password"
+        app:layout_constraintVertical_bias="0.018" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="97dp"
+        android:layout_height="112dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

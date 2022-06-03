@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">inSight</string>
+    <string name="title">inSight</string>
+    <string name="eye_title">Detect</string>
+    <string name="map_title">Navigate</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="tv_email">Email :</string>
+    <string name="hint_email">Masukan Email anda</string>
+    <string name="hint_password">Masukan Password anda</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="title_register">Silahkan daftarkan akun anda</string>
+    <string name="hint_name">Masukan nama anda</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="login_head">silahkan login:</string>
+    <string name="hint_username">masukan username anda</string>
+</resources>
