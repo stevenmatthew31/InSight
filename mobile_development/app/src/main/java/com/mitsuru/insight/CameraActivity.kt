@@ -36,7 +36,7 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
 
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
-    lateinit var objectDetector: ObjectDetector
+    private lateinit var objectDetector: ObjectDetector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +70,16 @@ class CameraActivity : AppCompatActivity() {
             CustomRemoteModel.Builder(FirebaseModelSource.Builder("InSight-object-detection").build())
             .build()
 
-        val downloadCondition = DownloadConditions.Builder()
+        val customObjectDetectorOptions = CustomObjectDetectorOptions.Builder(localModel)
+            .setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
+            .enableClassification()
+            .setClassificationConfidenceThreshold(0.5f)
+            .setMaxPerObjectLabelCount(3)
+            .build()
+
+        objectDetector = ObjectDetection.getClient(customObjectDetectorOptions)
+
+        /*val downloadCondition = DownloadConditions.Builder()
             .requireWifi()
             .build()
         RemoteModelManager.getInstance().download(remoteModel, downloadCondition)
@@ -97,7 +106,7 @@ class CameraActivity : AppCompatActivity() {
 
                 objectDetector = ObjectDetection.getClient(customObjectDetectorOptions)
 
-            }
+            }*/
         binding.backButton.setOnClickListener {
             startActivity(Intent(this@CameraActivity, MainActivity::class.java))
             finish()
