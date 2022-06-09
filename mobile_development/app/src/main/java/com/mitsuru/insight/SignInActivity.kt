@@ -5,8 +5,10 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.mitsuru.insight.databinding.ActivitySignInBinding
 import com.mitsuru.insight.information.LoginInformation
 import com.mitsuru.insight.response.SignInResponse
@@ -18,11 +20,14 @@ import retrofit2.Response
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignInBinding
+    lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = FirebaseAuth.getInstance()
 
         supportActionBar?.hide()
         showLoading(false)
@@ -30,11 +35,62 @@ class SignInActivity : AppCompatActivity() {
 
         binding.apply {
             btnRegister.setOnClickListener { startActivity(Intent(this@SignInActivity, SignUpActivity::class.java)) }
-            btnLogin.setOnClickListener {  }
+            btnLogin.setOnClickListener {
+                binding.apply {
+                    val email = edtEmail.text.toString()
+                    val password = edtPasssword.text.toString()
+
+                    if (email.isEmpty()){
+                        edtEmail.error = "email tidak boleh kosong"
+                        edtEmail.requestFocus()
+                        return@setOnClickListener
+                    }
+
+                    if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                        edtEmail.error = "email invalid"
+                        edtEmail.requestFocus()
+                        return@setOnClickListener
+                    }
+
+                    if (password.isEmpty()){
+                        edtPasssword.error = "password tidak boleh kosong"
+                        edtPasssword.requestFocus()
+                        return@setOnClickListener
+                    }
+
+                    if (password.length < 6){
+                        edtPasssword.error = "password tidak boleh kurang dari 6 karakter"
+                        edtPasssword.requestFocus()
+                        return@setOnClickListener
+                    }
+                    LoginFirebase(email , password)
+                }
+            }
         }
     }
 
-    private fun login(){
+    private fun LoginFirebase(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this){
+                if (it.isSuccessful){
+                    Toast.makeText(
+                        this,
+                        "Login berhasil",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(
+                        this,
+                        "${it.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+    }
+
+    /*private fun login(){
         val loginInfo = LoginInformation()
         binding.apply {
             loginInfo.email = edtEmail.text.toString()
@@ -66,11 +122,12 @@ class SignInActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<SignInResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                Toast.makeText(this@SignInActivity, t.message, Toast.LENGTH_SHORT).show()
+                showLoading(false)
             }
 
         })
-    }
+    }*/
 
     private fun startAnimation() {
         binding.apply {

@@ -8,6 +8,7 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiService {
+    @Headers("accept: application/json")
     @POST("register")
     fun registerUser(
         @Body registerInformation: RegisterInformation

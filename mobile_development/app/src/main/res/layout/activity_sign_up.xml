@@ -8,9 +8,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logo_dicoding"
+        android:layout_width="300dp"
+        android:layout_height="220dp"
+        android:src="@drawable/logo_insight"
         android:alpha="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,12 +79,26 @@
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:alpha="0"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/edt_email"
         app:layout_constraintStart_toStartOf="@+id/edt_email"
         app:layout_constraintTop_toBottomOf="@+id/edt_email"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.mitsuru.insight.customview.RegisterEditText
+        android:id="@+id/edt_passwordresub"
+        android:layout_width="351dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:alpha="0"
+        android:inputType="text"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/edt_password"
+        app:layout_constraintStart_toStartOf="@+id/edt_password"
+        app:layout_constraintTop_toBottomOf="@id/edt_password"
         app:layout_constraintVertical_bias="0.0" />
 
     <com.mitsuru.insight.customview.RegisterButton
@@ -97,10 +111,10 @@
         android:enabled="false"
         android:alpha="0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/edt_password"
+        app:layout_constraintEnd_toEndOf="@+id/edt_passwordresub"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_password"
-        app:layout_constraintTop_toBottomOf="@+id/edt_password"
+        app:layout_constraintStart_toStartOf="@+id/edt_passwordresub"
+        app:layout_constraintTop_toBottomOf="@+id/edt_passwordresub"
         app:layout_constraintVertical_bias="0.018" />
 
     <ProgressBar

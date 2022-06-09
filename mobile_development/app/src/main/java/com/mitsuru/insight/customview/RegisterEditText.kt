@@ -36,8 +36,8 @@ class RegisterEditText : AppCompatEditText {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.toString().length < 6) {
-                    error = "Password harus 6 karakter / lebih"
+                if (s.toString().length < 8) {
+                    error = "Password harus 8 karakter / lebih"
                 }
             }
 

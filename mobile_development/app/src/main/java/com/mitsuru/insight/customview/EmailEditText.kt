@@ -9,7 +9,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 
-class EmailEditText : AppCompatEditText {
+class                                                                   EmailEditText : AppCompatEditText {
     constructor(context: Context) : super(context) {
         init()
     }
@@ -35,9 +35,7 @@ class EmailEditText : AppCompatEditText {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!checkEmail(s.toString())) {
-                    error = "Email invalid!"
-                }
+                //do nothing
             }
 
             override fun afterTextChanged(p0: Editable?) {

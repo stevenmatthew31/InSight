@@ -5,4 +5,5 @@ class RegisterInformation {
     public var username : String? = null
     public var email : String? = null
     public var password : String? = null
+    public var resubPassword : String? = null
 }
