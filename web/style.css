@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+.description{
+    margin-right: 50px;
+    margin-left: 50px;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    text-align: center;
+    font-family: Poppins;
+}
+
+.btn {
+    background-color: #007893;
+    border: none;
+    padding: 12px 30px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+    background-color: dodgerblue;
+}
+footer{
+    background-color: #007893;
+    color: white;
+    text-align: center;
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:50px;
+    
+}
