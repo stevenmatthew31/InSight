@@ -21,4 +21,5 @@
     <string name="login_failed">"Login failed"</string>
     <string name="login_head">silahkan login:</string>
     <string name="hint_username">masukan username anda</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

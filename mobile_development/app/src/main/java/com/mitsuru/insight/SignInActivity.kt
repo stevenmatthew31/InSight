@@ -1,26 +1,55 @@
 package com.mitsuru.insight
 
+import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.mitsuru.insight.databinding.ActivitySignInBinding
-import com.mitsuru.insight.information.LoginInformation
-import com.mitsuru.insight.response.SignInResponse
-import com.mitsuru.insight.retrofit.ApiConfig
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
+import com.mitsuru.insight.util.User
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignInBinding
     lateinit var auth: FirebaseAuth
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
+    companion object{
+        private const val REQUEST_CODE = 10
+        private const val PERMISSION_LOCATION = 100
+        private var latitude = 0f
+        private var longitude = 0f
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE){
+            if (requestCode == PERMISSION_LOCATION){
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this, "Access Granted", Toast.LENGTH_SHORT).show()
+                    getCurrentLocation()
+                } else {
+                    Toast.makeText(this, "Access Denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +57,8 @@ class SignInActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        getCurrentLocation()
 
         supportActionBar?.hide()
         showLoading(false)
@@ -64,7 +95,67 @@ class SignInActivity : AppCompatActivity() {
                         return@setOnClickListener
                     }
                     LoginFirebase(email , password)
+                    LocationToFirebase(email , latitude , longitude)
                 }
+            }
+        }
+    }
+
+    private fun getCurrentLocation() {
+        if (checkPermission()){
+            if (isLocationEnabled()){
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener(this){ task ->
+                    val location: Location? = task.result
+                    if (location==null){
+                        Toast.makeText(this, "Null", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Get success", Toast.LENGTH_SHORT).show()
+                        latitude = location.latitude.toFloat()
+                        longitude = location.longitude.toFloat()
+                    }
+                }
+            }else{
+                Toast.makeText(this, "Nyalakan Location", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            requestPermission()
+        }
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager =  getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)||locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_LOCATION
+        )
+    }
+
+    private fun checkPermission(): Boolean{
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            return true
+        }
+
+        return false
+    }
+
+    private fun LocationToFirebase(email: String , lat: Float, lon: Float){
+        val ref = FirebaseDatabase.getInstance().getReference("user")
+
+        val userId = ref.push().key
+
+        val user = User(userId , email , lat, lon)
+
+        if (userId != null){
+            ref.child(userId).setValue(user).addOnCompleteListener {
+                Toast.makeText(this, "Data added", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -89,45 +180,6 @@ class SignInActivity : AppCompatActivity() {
                 }
             }
     }
-
-    /*private fun login(){
-        val loginInfo = LoginInformation()
-        binding.apply {
-            loginInfo.email = edtEmail.text.toString()
-            loginInfo.password = edtPasssword.text.toString()
-        }
-
-        showLoading(true)
-
-        val service = ApiConfig().getApiService().loginUser(loginInfo)
-        service.enqueue(object : Callback<SignInResponse>{
-            override fun onResponse(
-                call: Call<SignInResponse>,
-                response: Response<SignInResponse>,
-            ) {
-                if(response.isSuccessful){
-                    val responseBody = response.body()
-                    if (responseBody != null){
-                        Toast.makeText(
-                            this@SignInActivity,
-                            response.message(),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val intent = Intent(this@SignInActivity , MainActivity::class.java)
-                        showLoading(false)
-                        startActivity(intent)
-                        finish()
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<SignInResponse>, t: Throwable) {
-                Toast.makeText(this@SignInActivity, t.message, Toast.LENGTH_SHORT).show()
-                showLoading(false)
-            }
-
-        })
-    }*/
 
     private fun startAnimation() {
         binding.apply {

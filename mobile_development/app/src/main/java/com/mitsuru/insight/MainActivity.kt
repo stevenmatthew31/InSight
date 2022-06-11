@@ -39,6 +39,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity, CameraActivity::class.java))
             finish()
         }
+        binding.locate.setOnClickListener {
+            startActivity(Intent(this@MainActivity, MapsActivity::class.java))
+        }
     }
 
 

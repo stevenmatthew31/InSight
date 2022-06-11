@@ -14,7 +14,9 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
+import com.google.android.gms.tasks.Task
 import com.google.common.util.concurrent.ListenableFuture
+import com.google.firebase.ml.modeldownloader.CustomModel
 import com.google.firebase.ml.modeldownloader.CustomModelDownloadConditions
 import com.google.firebase.ml.modeldownloader.DownloadType
 import com.google.firebase.ml.modeldownloader.FirebaseModelDownloader
@@ -29,6 +31,7 @@ import com.google.mlkit.vision.objects.ObjectDetector
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions
 import com.mitsuru.insight.databinding.ActivityCameraBinding
 import com.mitsuru.insight.util.Draw
+import org.tensorflow.lite.Interpreter
 import java.lang.Exception
 
 class CameraActivity : AppCompatActivity() {
@@ -52,18 +55,8 @@ class CameraActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        /*val conditions = CustomModelDownloadConditions.Builder()
-            .requireWifi()
-            .build()
-        FirebaseModelDownloader.getInstance()
-            .getModel("InSight-object-detection", DownloadType.LOCAL_MODEL, conditions)
-            .addOnCompleteListener {
-                // Download complete. Depending on your app, you could enable the ML
-                // feature, or switch from the local model to the remote model, etc.
-            }*/
-
         val localModel = LocalModel.Builder()
-            .setAssetFilePath("model.tflite")
+            .setAssetFilePath("model_metadata_new.tflite")
             .build()
 
         val remoteModel =
@@ -79,34 +72,7 @@ class CameraActivity : AppCompatActivity() {
 
         objectDetector = ObjectDetection.getClient(customObjectDetectorOptions)
 
-        /*val downloadCondition = DownloadConditions.Builder()
-            .requireWifi()
-            .build()
-        RemoteModelManager.getInstance().download(remoteModel, downloadCondition)
-            .addOnCompleteListener {
-                //success
-            }
 
-        RemoteModelManager.getInstance().isModelDownloaded(remoteModel)
-            .addOnSuccessListener { isDownloaded ->
-                val optionBuilder =
-                    if (isDownloaded){
-                        CustomObjectDetectorOptions.Builder(remoteModel)
-                    } else {
-                        CustomObjectDetectorOptions.Builder(localModel)
-                    }
-
-                val customObjectDetectorOptions = optionBuilder
-                    .setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
-                    .enableClassification()
-                    .setClassificationConfidenceThreshold(0.5f)
-                    .setMaxPerObjectLabelCount(3)
-                    .build()
-
-
-                objectDetector = ObjectDetection.getClient(customObjectDetectorOptions)
-
-            }*/
         binding.backButton.setOnClickListener {
             startActivity(Intent(this@CameraActivity, MainActivity::class.java))
             finish()

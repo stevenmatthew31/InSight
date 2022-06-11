@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -53,6 +54,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.3'
     implementation 'com.google.firebase:firebase-ml-modeldownloader-ktx:24.0.3'
+    implementation 'org.tensorflow:tensorflow-lite-select-tf-ops:2.3.0'
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.firebase:firebase-database-ktx:20.0.5'
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
 
     //camera
     def camerax_version = "1.1.0-beta02"
@@ -68,6 +73,7 @@ dependencies {
     //firebase
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'org.tensorflow:tensorflow-lite:2.3.0'
     implementation 'com.google.mlkit:object-detection-custom:17.0.0'
     implementation 'com.google.mlkit:linkfirebase:17.0.0'
 

@@ -1,8 +1,10 @@
 package com.mitsuru.insight
 
+import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -13,17 +15,14 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.mitsuru.insight.databinding.ActivitySignUpBinding
-import com.mitsuru.insight.information.RegisterInformation
-import com.mitsuru.insight.response.SignUpResponse
-import com.mitsuru.insight.retrofit.ApiConfig
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
     lateinit var auth : FirebaseAuth
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,60 +116,7 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
-    /*private fun register(){
-        val registerInfo = RegisterInformation()
-        binding.apply {
-            registerInfo.name = edtName.text.toString()
-            registerInfo.username = edtUsername.text.toString()
-            registerInfo.email = edtEmail.text.toString()
-            registerInfo.password = edtPassword.text.toString()
-            registerInfo.resubPassword = edtPasswordresub.text.toString()
-        }
 
-        showLoading(true)
-
-        val service = ApiConfig().getApiService().registerUser(registerInfo)
-        service.enqueue(object : Callback<SignUpResponse> {
-            override fun onResponse(
-                call: Call<SignUpResponse>,
-                response: Response<SignUpResponse>,
-            ) {
-                if (response.isSuccessful){
-                    val responseBody  =  response.body()
-                    if (responseBody != null){
-                        Toast.makeText(
-                            this@SignUpActivity,
-                            response.message(),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val intent = Intent(this@SignUpActivity , SignInActivity::class.java)
-                        showLoading(false)
-                        startActivity(intent)
-                        finish()
-                    } else{
-                        Toast.makeText(
-                            this@SignUpActivity,
-                            response.message(),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        showLoading(false)
-                    }
-                } else {
-                    Toast.makeText(
-                        this@SignUpActivity,
-                        response.message(),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    showLoading(false)
-                }
-            }
-
-            override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
-                Toast.makeText(this@SignUpActivity, t.message, Toast.LENGTH_SHORT).show()
-                showLoading(false)
-            }
-        })
-    }*/
 
     private fun enableButton() {
         val result = binding.edtPassword.text
