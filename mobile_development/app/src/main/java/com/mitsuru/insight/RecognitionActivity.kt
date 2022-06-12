@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -16,12 +17,14 @@ import com.mitsuru.insight.ml.ModelBaru
 import com.mitsuru.insight.util.rotateBitmap
 import org.tensorflow.lite.support.image.TensorImage
 import java.io.File
+import java.util.*
 
 class RecognitionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecognitionBinding
     private var getFile: File? = null
     private lateinit var bitmap: Bitmap
+    lateinit var tts : TextToSpeech
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -107,6 +110,14 @@ class RecognitionActivity : AppCompatActivity() {
                 val score = detectionResult.categoryAsString;
 
                 binding.textView2.text = score
+
+                tts = TextToSpeech(applicationContext,TextToSpeech.OnInitListener {
+                    if (it == TextToSpeech.SUCCESS){
+                        tts.language = Locale.US
+                        tts.setSpeechRate(1.0f)
+                        tts.speak(binding.textView2.text.toString(), TextToSpeech.QUEUE_ADD , null)
+                    }
+                })
 
                 // Releases model resources if no longer used.
                 model.close()

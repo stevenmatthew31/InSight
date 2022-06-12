@@ -65,27 +65,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         listUser = mutableListOf()
         ref = FirebaseDatabase.getInstance().getReference("user")
 
-        ref.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()){
-                    val userLog = snapshot.child("user").getValue(User::class.java)
-                    var userLat = userLog?.lat
-                    var userLon = userLog?.lon
 
-                    if (userLat != null && userLon != null){
-                        val userLocation = LatLng(userLat.toDouble(),userLon.toDouble())
-                        val markerOptions = MarkerOptions().position(userLocation).title(userLog?.email.toString())
-                        mMap.addMarker(markerOptions)
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10f))
-                    }
-                }
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "database error", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 
     /**
@@ -108,9 +88,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         getMyLocation()
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        ref.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()){
+                    val userLog = snapshot.child("user").getValue(User::class.java)
+                    var userLat = userLog?.lat
+                    var userLon = userLog?.lon
+
+                    if (userLat != null && userLon != null){
+                        val userLocation = LatLng(userLat.toDouble(),userLon.toDouble())
+                        val markerOptions = MarkerOptions().position(userLocation).title(userLog?.email.toString())
+                        mMap.addMarker(markerOptions)
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10f))
+                    }
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(applicationContext, "database error", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
