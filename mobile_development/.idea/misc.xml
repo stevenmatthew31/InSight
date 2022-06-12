@@ -6,10 +6,13 @@
         <entry key="..\:/Bangkit 2022/inSight/app/src/main/res/drawable/button_disable.xml" value="0.1165" />
         <entry key="..\:/Bangkit 2022/inSight/app/src/main/res/drawable/eye.xml" value="0.1165" />
         <entry key="..\:/Bangkit 2022/inSight/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1165" />
+        <entry key="..\:/Bangkit 2022/inSight/app/src/main/res/drawable/ic_capture.xml" value="0.1245" />
         <entry key="..\:/Bangkit 2022/inSight/app/src/main/res/drawable/maps.xml" value="0.1165" />
         <entry key="..\:/Bangkit 2022/inSight/app/src/main/res/layout/activity_camera.xml" value="0.15896739130434784" />
+        <entry key="..\:/Bangkit 2022/inSight/app/src/main/res/layout/activity_camera_xactivitty.xml" value="0.1802536231884058" />
         <entry key="..\:/Bangkit 2022/inSight/app/src/main/res/layout/activity_login.xml" value="0.15896739130434784" />
         <entry key="..\:/Bangkit 2022/inSight/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Bangkit 2022/inSight/app/src/main/res/layout/activity_recognition.xml" value="0.1802536231884058" />
         <entry key="..\:/Bangkit 2022/inSight/app/src/main/res/layout/activity_sign_in.xml" value="0.15896739130434784" />
         <entry key="..\:/Bangkit 2022/inSight/app/src/main/res/layout/activity_sign_up.xml" value="0.15896739130434784" />
       </map>

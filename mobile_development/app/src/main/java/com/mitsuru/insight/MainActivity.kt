@@ -42,6 +42,10 @@ class MainActivity : AppCompatActivity() {
         binding.locate.setOnClickListener {
             startActivity(Intent(this@MainActivity, MapsActivity::class.java))
         }
+
+        binding.capture.setOnClickListener {
+            startActivity(Intent(this, RecognitionActivity::class.java))
+        }
     }
 
 
